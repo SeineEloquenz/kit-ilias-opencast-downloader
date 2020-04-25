@@ -1,0 +1,13 @@
+{
+  "name": "Kit Ilias OpenCast Downloader",
+  "version": "1.0",
+  "description": "Downloads lecture recordings from KIT Ilias",
+  "icons": {"128": "icon128.png"},
+  "content_scripts": [{
+    "css": ["styles.css"],
+    "js": ["content.js"],
+    "matches": ["*://*/*"],
+    "run_at": "document_end"
+  }],
+  "manifest_version": 2
+}
