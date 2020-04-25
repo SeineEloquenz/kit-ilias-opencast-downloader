@@ -2,11 +2,24 @@
   "name": "Kit Ilias OpenCast Downloader",
   "version": "1.0",
   "description": "Downloads lecture recordings from KIT Ilias",
-  "icons": {"128": "icon128.png"},
+  "icons": {
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "downloads"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "page_action": {
+    "default_icon": {
+      "128": "icon128.png"
+    },
+    "default_title": "Download video"
+  },
   "content_scripts": [{
-    "css": ["styles.css"],
     "js": ["content.js"],
-    "matches": ["*://*/*"],
+    "matches": ["https://ilias.studium.kit.edu/*"],
     "run_at": "document_end"
   }],
   "manifest_version": 2
