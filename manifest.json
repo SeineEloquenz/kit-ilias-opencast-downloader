@@ -1,5 +1,6 @@
 {
   "name": "Kit Ilias OpenCast Downloader",
+  "author": "Alexander Linder",
   "version": "1.0",
   "description": "Downloads lecture recordings from KIT Ilias",
   "icons": {
