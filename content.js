@@ -20,7 +20,7 @@ let url = window.location.href;
 let matchPattern = new RegExp('.*&cmd=streamVideo.*');
 
 if (matchPattern.test(url)) {
-    if( document.readyState !== 'loading' ) {
+    if (document.readyState !== 'loading' ) {
         console.log('ready');
         setTimeout(run, 100);
     } else {
