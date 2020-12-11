@@ -38,6 +38,7 @@ function run() {
     let videoUrl = videoDiv.firstElementChild.getAttribute('src');
     chrome.runtime.sendMessage({
         'name': 'recording',
-        'videoUrl': videoUrl
+        'videoUrl': videoUrl,
+        'title': document.title
     });
 }

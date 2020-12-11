@@ -25,9 +25,10 @@ chrome.tabs.onRemoved.addListener((tabId) => urls.delete(tabId));
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request['name'] === 'recording') {
         let videoUrl = request['videoUrl'];
+        let title = request['title']
         showPageAction(sender.tab.id);
         if (!urls.has(sender.tab.id)) {
-            chrome.pageAction.onClicked.addListener((tab) => download(tab.id, sender.tab.id));
+            chrome.pageAction.onClicked.addListener((tab) => download(tab.id, sender.tab.id, title));
         }
         urls.set(sender.tab.id, videoUrl);
     } else if (request['name'] === 'no-recording') {
@@ -37,9 +38,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 //Download file if on the correct tab
-function download(tabId, wantedTabId) {
+function download(tabId, wantedTabId, title) {
     if (tabId === wantedTabId) {
-        chrome.downloads.download({url: urls.get(tabId)});
+        chrome.downloads.download({url: urls.get(tabId), filename: title});
     }
 }
 
