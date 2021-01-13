@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 //Download file if on the correct tab
 function download(tabId, wantedTabId, title) {
     if (tabId === wantedTabId) {
-        chrome.downloads.download({url: urls.get(tabId), filename: title});
+        chrome.downloads.download({url: urls.get(tabId), filename: title.replace(/[/\\?%*:|"<>]/g, '-')});
     }
 }
 
