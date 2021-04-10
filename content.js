@@ -36,9 +36,15 @@ if (matchPattern.test(url)) {
 function run() {
     let videoDiv = document.getElementById('video_0');
     let videoUrl = videoDiv.firstElementChild.getAttribute('src');
+    let fileName = new URL(videoUrl).pathname.split("/").slice(-1)[0];
+    let fileExtension = "." + fileName.split(".").slice(-1)[0];
+    let title = document.title;
+    if (!title.endsWith(fileExtension)) {
+        title += fileExtension;
+    }
     chrome.runtime.sendMessage({
         'name': 'recording',
         'videoUrl': videoUrl,
-        'title': document.title
+        'title': title
     });
 }
