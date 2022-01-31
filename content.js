@@ -34,13 +34,15 @@ if (matchPattern.test(url)) {
 }
 
 function run() {
-    let videoDiv = document.getElementById('video_0');
-    let videoUrl = videoDiv.firstElementChild.getAttribute('src');
-    let fileName = new URL(videoUrl).pathname.split("/").slice(-1)[0];
-    let fileExtension = "." + fileName.split(".").slice(-1)[0];
-    let title = document.title;
+    let paellaContent = document.body.childNodes[9].text;
+    let paella = paellaContent.substring(25, paellaContent.length - 3).split(",\n\t")[0];
+    let paellaJson = JSON.parse(paella);
+    let videoUrl = paellaJson.streams[0].sources.mp4[0].src;
+    let title = paellaJson.metadata.title;
+    let mimetype = paellaJson.streams[0].sources.mp4[0].mimetype;
+    let fileExtension = mimetype.split("/")[1];
     if (!title.endsWith(fileExtension)) {
-        title += fileExtension;
+        title = title + "." + fileExtension;
     }
     chrome.runtime.sendMessage({
         'name': 'recording',
@@ -48,3 +50,5 @@ function run() {
         'title': title
     });
 }
+
+'{"streams":[{"content":"presentation","sources":{"mp4":[{"src":"https:\\/\\/oc-delivery.bibliothek.kit.edu\\/staticfiles\\/mh_default_org\\/api\\/61c4e8db-1467-4662-9110-9461a5c8bb89\\/12c44b7f-22ba-4ec4-99c7-9e86fa90ace7\\/o_1el7v848l1rkb1khbc98erggl77.mp4?policy=eyJTdGF0ZW1lbnQiOnsiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTY0MzY3NDQyOTAwMH0sIlJlc291cmNlIjoiaHR0cHM6XC9cL29jLWRlbGl2ZXJ5LmJpYmxpb3RoZWsua2l0LmVkdVwvc3RhdGljZmlsZXNcL21oX2RlZmF1bHRfb3JnXC9hcGlcLzYxYzRlOGRiLTE0NjctNDY2Mi05MTEwLTk0NjFhNWM4YmI4OVwvMTJjNDRiN2YtMjJiYS00ZWM0LTk5YzctOWU4NmZhOTBhY2U3XC9vXzFlbDd2ODQ4bDFya2Ixa2hiYzk4ZXJnZ2w3Ny5tcDQifX0&keyId=default&signature=9bd42a4bc007bf05ae961b1a2afbdec7d2c73cab7316d7d94e4581c7a92715ec","mimetype":"video\\/mp4","res":{"w":1280,"h":720}}]}}],"metadata":{"title":"TM-2.1-2","duration":1124880,"preview":"https:\\/\\/oc-delivery.bibliothek.kit.edu\\/staticfiles\\/mh_default_org\\/api\\/61c4e8db-1467-4662-9110-9461a5c8bb89\\/4a351e1a-4d1a-49c9-a4ac-f20dd86f4eb7\\/o_1el7v848l1rkb1khbc98erggl77_0_000s_search.jpg?policy=eyJTdGF0ZW1lbnQiOnsiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6MTY0MzY3OTk0MjI1NX0sIlJlc291cmNlIjoiaHR0cHM6XC9cL29jLWRlbGl2ZXJ5LmJpYmxpb3RoZWsua2l0LmVkdVwvc3RhdGljZmlsZXNcL21oX2RlZmF1bHRfb3JnXC9hcGlcLzYxYzRlOGRiLTE0NjctNDY2Mi05MTEwLTk0NjFhNWM4YmI4OVwvNGEzNTFlMWEtNGQxYS00OWM5LWE0YWMtZjIwZGQ4NmY0ZWI3XC9vXzFlbDd2ODQ4bDFya2Ixa2hiYzk4ZXJnZ2w3N18wXzAwMHNfc2VhcmNoLmpwZyJ9fQ&keyId=default&signature=0a7a2e2ae28968bfb3dd35c3ff8415bd6440096352d50050e046457aac78bc87"},"frameList":[]},'
